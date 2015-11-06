@@ -178,6 +178,7 @@ var update = function(){
 
 		//collision detection/OOB and win/lose
 
+		//Out of bounds detection for enemies
 		for (var i = enemies.length - 1; i >= 0; i--) {
 			if(enemies[i] != null && enemies[i].x > (canvas.height + 35)){
 				enemies[i].x = -35;
@@ -185,6 +186,7 @@ var update = function(){
 			}
 		};
 
+		//out of bounds for bullets
 		for (var i = shots.length - 1; i >= 0; i--) {
 			if(shots[i] != null && shots[i].x < 0){
 				shots.splice(i, 1);
@@ -192,6 +194,8 @@ var update = function(){
 
 		};
 
+
+		//hit detection between enemies and bullets
 		for (var i = shots.length - 1; i >= 0; i--) {
 			if(shots[i] != null){
 				for (var j = enemies.length - 1; j >= 0; j--) {
@@ -211,6 +215,7 @@ var update = function(){
 			}
 		};
 
+		//hit detection between enemies and player
 		for (var i = enemies.length - 1; i >= 0; i--) {
 			if(enemies[i] != null){
 				if(
@@ -223,25 +228,25 @@ var update = function(){
 				}
 			}
 		};
+
 	}
 	else{gameOver();}
 	
 };
 
+//controls what happens when the game is lost
 var gameOver = function(){	
 
 	ctx.fillText("Game Over! Your Score: " + score + "		Press S To Restart", 32, 32);
 
 	window.addEventListener("keydown", function(event){
 		if(turret.isAlive == false && event.keyCode == 83){
-			score = 0;
-			enemies.length = 0;
-			//populateEnemies();
 			location.reload();
 		}
 	});
 }
 
+//Control for the start of the game
 var start = function(){
 
 	ctx.fillStyle = "rgb(0,0,0)";
@@ -268,6 +273,4 @@ var main = function(){
 	requestAnimationFrame(main);
 }
 
-//populateSprites();
-//main();
 start();
